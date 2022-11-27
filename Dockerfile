@@ -1,15 +1,22 @@
-#publicly available docker image "python" on docker hub will be pulled
+#Dockerfile, image, container
 
-FROM python
+FROM node:16
 
-#creating directory helloworld in container (linux machine)
+WORKDIR /usr/src/app
 
-RUN mkdir c:\home\helloworld
+COPY package*.json ./
 
-#copying helloworld.py from local directory to container's helloworld folder
+RUN npm install
 
-COPY helloworld.py /home/helloworld/helloworld.py
+COPY . .
 
-#running helloworld.py in container
+#ADD docker-entrypoint.sh /usr/src/app/
 
-CMD python /home/helloworld/helloworld.py
+#RUN ["chmod", "777", "/usr/src/app/docker-entrypoint.sh"]
+
+#RUN ["chmod", "777", "/usr/local/bin/docker-entrypoint.sh"]
+
+EXPOSE 8080
+
+CMD [ "node", "index.js" ]
+
